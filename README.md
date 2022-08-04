@@ -9,7 +9,7 @@
 3. `$ npm start` or `$ yarn start`
 
 ### Server
-
+Download the script database file  https://github.com/giancarlocorrea/Viper/blob/master/create%20Database.sql
 1. Change your mySQL database data `server/index.js`
 2. `$ cd server`
 3. `$ npm install` or `$ yarn`
@@ -25,11 +25,13 @@
 
 ### Front-end
 
-- `@material-ui`
+- `React`
+- `@material-table`
 - `Axios`
 
 ### Back-end
 
+- `node`
 - `express`
 - `mysql`
 - `nodemon`

@@ -1,5 +1,9 @@
 # React-JS--CRUD-Inventory
 
+Welcome to my github code project.
+
+Down below there is a tutorial on how to install and some images from the prototype too
+
 ## Installation
 
 ### Client

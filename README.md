@@ -53,7 +53,7 @@ In both of them there are the button actions where you can Insert ![image](https
 ![main page](https://user-images.githubusercontent.com/95420878/182945715-262799d2-1fdb-4006-a634-a37e112cf03d.jpg)
 
 - To associate a Product to a Raw Material, just hit the button Associate ![image](https://user-images.githubusercontent.com/95420878/182947709-3af47b0e-c2ab-48b1-ade0-af0ec3bd3dad.png)
-- Then a Modal/Dialog will pop out   ![image](https://user-images.githubusercontent.com/95420878/182948288-cd581715-1e4b-4ed4-80bd-4f90e138ba8b.png)
+- Then a Modal/Dialog will pop out   ![image](https://user-images.githubusercontent.com/95420878/183077160-6e47da86-ffd8-4867-a57b-b91e945a7269.png)
 
 - and you can add the quantity of Raw Material will be produced with the Product associated
 

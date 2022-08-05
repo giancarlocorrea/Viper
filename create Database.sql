@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 -- MySQL Workbench Forward Engineering
+=======
+-- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+--
+-- Host: localhost    Database: viper
+-- ------------------------------------------------------
+-- Server version	8.0.30
+>>>>>>> 1658e08aa405e3841467b76dcbbe3461ff50c99b
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;

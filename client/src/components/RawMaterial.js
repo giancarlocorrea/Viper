@@ -67,22 +67,13 @@ const TableRawMaterial = ({
   setListRawMaterial,
   setSelectedRawMaterial,
 }) => {
-  const [selectedRow, setSelectedRow] = useState(null);
-
   return (
     <div className="Table">
       <MaterialTable
         icons={tableIcons}
         columns={columns}
         data={listRawMaterial}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow.tableData.id);
-        }}
         options={{
-          rowStyle: (rowData) => ({
-            backgroundColor:
-              selectedRow === rowData.tableData.id ? "#EEE" : "#FFF",
-          }),
           showTitle: false,
           actionsColumnIndex: -1,
           addRowPosition: "first",
@@ -96,7 +87,6 @@ const TableRawMaterial = ({
           showTextRowsSelected: false,
         }}
         onSelectionChange={(rows) => {
-          console.log(rows);
           setSelectedRawMaterial(rows);
         }}
         editable={{

@@ -45,10 +45,10 @@ const tableIcons = {
 };
 
 const columns = [
+  { title: "id", field: "id", hidden: true },
   {
     title: "Name",
     field: "name",
-    //    render: (row) => <div onClick={() => alert(row.id)}>{row.id}</div>,
     cellStyle: { width: "90%" },
     validate: (rowData) =>
       rowData.name === undefined || rowData.name === "" ? "Required" : true,
@@ -62,7 +62,11 @@ const columns = [
   },
 ];
 
-const TableRawMaterial = ({ listRawMaterial, setListRawMaterial }) => {
+const TableRawMaterial = ({
+  listRawMaterial,
+  setListRawMaterial,
+  setSelectedRawMaterial,
+}) => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   return (
@@ -87,17 +91,27 @@ const TableRawMaterial = ({ listRawMaterial, setListRawMaterial }) => {
           tableLayout: "auto",
           showFirstLastPageButtons: "false",
           pageSizeOptions: [],
+          selection: true,
+          showSelectAllCheckbox: false,
+          showTextRowsSelected: false,
+        }}
+        onSelectionChange={(rows) => {
+          console.log(rows);
+          setSelectedRawMaterial(rows);
         }}
         editable={{
           onRowAdd: (newData) =>
             //backEnd call
             new Promise((resolve, reject) => {
+              let id = new Date().getTime().toString();
               setTimeout(() => {
                 axios.post("http://localhost:3001/addRawMaterial", {
+                  id,
                   name: newData.name,
                   qtty: newData.qtty,
                 });
               }, 1000);
+              newData.id = id;
               setListRawMaterial([...listRawMaterial, newData]);
               resolve();
             }),
@@ -113,7 +127,7 @@ const TableRawMaterial = ({ listRawMaterial, setListRawMaterial }) => {
                 .then((resp) => {
                   setListRawMaterial(
                     listRawMaterial.map((value) => {
-                      return value.id == newData.id
+                      return value.id === newData.id
                         ? {
                             id: newData.id,
                             name: newData.name,
@@ -141,7 +155,7 @@ const TableRawMaterial = ({ listRawMaterial, setListRawMaterial }) => {
                 .then((resp) => {
                   setListRawMaterial(
                     listRawMaterial.filter((value) => {
-                      return value.id != newData.id;
+                      return value.id !== newData.id;
                     })
                   );
                   resolve();

@@ -1,76 +1,64 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
---
--- Host: localhost    Database: vir
--- ------------------------------------------------------
--- Server version	8.0.30
+-- MySQL Workbench Forward Engineering
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
---
--- Table structure for table `inventory`
---
+-- -----------------------------------------------------
+-- Schema viper
+-- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `inventory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inventory` (
-  `id_products` int NOT NULL,
-  `id_raw_materials` int NOT NULL,
-  `qtty` varchar(6) NOT NULL,
-  PRIMARY KEY (`id_products`,`id_raw_materials`),
-  KEY `fk_products_has_raw_materials_raw_materials_idx` (`id_raw_materials`),
-  KEY `fk_products_has_raw_materials_products_idx` (`id_products`),
-  CONSTRAINT `fk_products_has_raw_materials_products` FOREIGN KEY (`id_products`) REFERENCES `products` (`id`),
-  CONSTRAINT `fk_products_has_raw_materials_raw_materials` FOREIGN KEY (`id_raw_materials`) REFERENCES `raw_materials` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Schema viper
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `viper` DEFAULT CHARACTER SET utf8 ;
+USE `viper` ;
 
---
--- Table structure for table `products`
---
+-- -----------------------------------------------------
+-- Table `viper`.`products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `viper`.`products` (
+  `id` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `price` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `price` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `raw_materials`
---
+-- -----------------------------------------------------
+-- Table `viper`.`raw_materials`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `viper`.`raw_materials` (
+  `id` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `qtty` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `raw_materials`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `raw_materials` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `qtty` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- -----------------------------------------------------
+-- Table `viper`.`inventory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `viper`.`inventory` (
+  `id_products` VARCHAR(45) NOT NULL,
+  `id_raw_materials` VARCHAR(45) NOT NULL,
+  `qtty` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_products`, `id_raw_materials`),
+  INDEX `fk_products_has_raw_materials_raw_materials1_idx` (`id_raw_materials` ASC) VISIBLE,
+  INDEX `fk_products_has_raw_materials_products_idx` (`id_products` ASC) VISIBLE,
+  CONSTRAINT `fk_products_has_raw_materials_products`
+    FOREIGN KEY (`id_products`)
+    REFERENCES `viper`.`products` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_products_has_raw_materials_raw_materials1`
+    FOREIGN KEY (`id_raw_materials`)
+    REFERENCES `viper`.`raw_materials` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
--- Dump completed on 2022-08-04 16:23:47
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

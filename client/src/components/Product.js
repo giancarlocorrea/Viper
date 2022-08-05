@@ -48,6 +48,7 @@ const columns = [
   {
     title: "Name",
     field: "name",
+
     validate: (rowData) =>
       rowData.name === undefined || rowData.name === "" ? "Required" : true,
   },
@@ -59,7 +60,7 @@ const columns = [
   },
 ];
 
-const TableProducts = ({ listProduct, setListProduct }) => {
+const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   return (
@@ -88,17 +89,22 @@ const TableProducts = ({ listProduct, setListProduct }) => {
           showSelectAllCheckbox: false,
           showTextRowsSelected: false,
         }}
-        onSelectionChange={(rows) => console.log(rows)}
+        onSelectionChange={(rows) => {
+          setSelectedProduct(rows);
+        }}
         editable={{
           onRowAdd: (newData) =>
             //backEnd call
             new Promise((resolve, reject) => {
+              let id = new Date().getTime().toString();
               setTimeout(() => {
                 axios.post("http://localhost:3001/addProduct", {
+                  id,
                   name: newData.name,
                   price: newData.price,
                 });
               }, 1000);
+              newData.id = id;
               setListProduct([...listProduct, newData]);
               resolve();
             }),

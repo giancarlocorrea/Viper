@@ -11,6 +11,9 @@ export default function App() {
   const [listProduct, setListProduct] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const [selectedRawMaterial, setSelectedRawMaterial] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState([]);
+
   useEffect(() => {
     Axios.get("http://localhost:3001/getAllRawMaterials").then((response) => {
       setListRawMaterial(response.data);
@@ -23,26 +26,32 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <TableProduct listProduct={listProduct} setListProduct={setListProduct} />
+      <TableProduct
+        listProduct={listProduct}
+        setListProduct={setListProduct}
+        setSelectedProduct={setSelectedProduct}
+      />
       <Inventory
         open={open}
         setOpen={setOpen}
-        id_products={"4"}
-        id_raw_materials={"14"}
-        qtty={"15"}
-        id={"11"}
+        selectedProduct={selectedProduct}
+        selectedRawMaterial={selectedRawMaterial}
       />
       <button
         className="register-button"
+        disabled={
+          selectedProduct.length === 0 || selectedRawMaterial.length === 0
+        }
         onClick={() => {
           setOpen(true);
         }}
       >
-        <p>-- Associate --</p> {}
+        -- Associate --
       </button>
       <TableRawMaterial
         listRawMaterial={listRawMaterial}
         setListRawMaterial={setListRawMaterial}
+        setSelectedRawMaterial={setSelectedRawMaterial}
       />
     </div>
   );

@@ -18,11 +18,12 @@ app.use(cors());
 // -------------------- INSERT/ADD RAW MATERIAL ------------------------ //
 
 app.post("/addRawMaterial", (req, res) => {
+  const { id } = req.body;
   const { name } = req.body;
   const { qtty } = req.body;
 
-  let mysql = "INSERT INTO raw_materials ( name, qtty) VALUES (?, ?)";
-  db.query(mysql, [name, qtty], (err, result) => {
+  let mysql = "INSERT INTO raw_materials ( id, name, qtty) VALUES (?, ?, ?)";
+  db.query(mysql, [id, name, qtty], (err, result) => {
     res.send(result);
   });
 });
@@ -76,11 +77,12 @@ app.delete("/deleteRawMaterial/:id", (req, res) => {
 // -------------------- INSERT/ADD PRODUCT ------------------------ //
 
 app.post("/addProduct", (req, res) => {
+  const { id } = req.body;
   const { name } = req.body;
   const { price } = req.body;
 
-  let mysql = "INSERT INTO products ( name, price) VALUES (?, ?)";
-  db.query(mysql, [name, price], (err, result) => {
+  let mysql = "INSERT INTO products (id, name, price) VALUES (?, ?, ?)";
+  db.query(mysql, [id, name, price], (err, result) => {
     res.send(result);
   });
 });

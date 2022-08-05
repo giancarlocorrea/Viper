@@ -7,29 +7,27 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Axios from "axios";
 
-export default function Inventory(props) {
-  const [editValues, setEditValues] = useState({
-    id_products: props.id_products,
-    id_raw_materials: props.id_raw_materials,
-    qtty: props.qtty,
-  });
+export default function Inventory({
+  open,
+  setOpen,
+  selectedProduct,
+  selectedRawMaterial,
+}) {
+  const [selectedRawMaterialQtty, setSelectedRawMaterialQtty] = useState(0);
 
-  const handleChangeValues = (values) => {
-    setEditValues((prevValues) => ({
-      ...prevValues,
-      [values.target.id]: values.target.value,
-    }));
-  };
+  let id_product = selectedProduct.length !== 0 ? selectedProduct[0].id : null;
+  let id_raw_material =
+    selectedRawMaterial.length !== 0 ? selectedRawMaterial[0].id : null;
 
   const handleClose = () => {
-    props.setOpen(false);
+    setOpen(false);
   };
 
-  const handleInsert = () => {
+  const handleInsert = (id_product, id_raw_material, raw_material_qtty) => {
     Axios.post("http://localhost:3001/addInventory", {
-      id_products: "4",
-      id_raw_materials: "14",
-      qtty: "5",
+      id_products: id_product,
+      id_raw_materials: id_raw_material,
+      qtty: raw_material_qtty,
     });
 
     handleClose();
@@ -38,7 +36,7 @@ export default function Inventory(props) {
   return (
     <div>
       <Dialog
-        open={props.open}
+        open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
@@ -48,20 +46,10 @@ export default function Inventory(props) {
             autoFocus
             margin="dense"
             id="qtty"
-            label="Quantity of Raw material"
-            defaultValue={props.qtty}
-            type="text"
-            onChange={handleChangeValues}
-            fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="qtty"
+            onChange={(event) => setSelectedRawMaterialQtty(event.target.value)}
             label="Quantity"
-            defaultValue={props.qtty}
+            defaultValue=""
             type="text"
-            onChange={handleChangeValues}
             fullWidth
           />
         </DialogContent>
@@ -69,7 +57,12 @@ export default function Inventory(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button color="primary" onClick={() => handleInsert()}>
+          <Button
+            color="primary"
+            onClick={() =>
+              handleInsert(id_product, id_raw_material, selectedRawMaterialQtty)
+            }
+          >
             Save
           </Button>
         </DialogActions>

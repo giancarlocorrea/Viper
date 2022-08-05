@@ -63,6 +63,7 @@ const columns = [
 const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
   return (
     <div className="Table">
+      <h2>Products</h2>
       <MaterialTable
         icons={tableIcons}
         columns={columns}
@@ -85,7 +86,9 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
         }}
         editable={{
           onRowAdd: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for INSERT/ADD a PRODUCT
+            ///
             new Promise((resolve, reject) => {
               let id = new Date().getTime().toString();
               setTimeout(() => {
@@ -101,7 +104,9 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
             }),
 
           onRowUpdate: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for UPDATE a PRODUCT
+            ///
 
             new Promise((resolve, reject) => {
               axios
@@ -128,7 +133,9 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
             }),
 
           onRowDelete: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for DELETE a PRODUCT
+            ///
             new Promise((resolve, reject) => {
               axios
                 .delete(`http://localhost:3001/deleteProduct/${newData.id}`, {

@@ -5,9 +5,16 @@
 }
 
 .Table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-left: 1rem;
   padding-top: 1rem;
   width: 22rem;
+}
+
+.Table h2 {
+  margin-bottom: 0.5rem;
 }
 
 .app-container {
@@ -16,13 +23,7 @@
   align-items: center;
 }
 
-.register-input {
-  display: block;
-  margin: 10px auto;
-  padding: 7px 0;
-}
-
 .register-button {
-  margin-left: 1rem;
-  padding: 2px 5px;
+  margin-left: 2rem;
+  padding: 5px 5px;
 }

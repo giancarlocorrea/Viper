@@ -7,10 +7,13 @@ import TableRawMaterial from "./components/RawMaterial";
 import Inventory from "./components/dialog/dlgInventory";
 
 export default function App() {
+  //states for listing tables
   const [listRawMaterial, setListRawMaterial] = useState([]);
   const [listProduct, setListProduct] = useState([]);
+
   const [open, setOpen] = useState(false);
 
+  //states for selected items
   const [selectedRawMaterial, setSelectedRawMaterial] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
 

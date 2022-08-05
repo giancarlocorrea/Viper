@@ -69,6 +69,7 @@ const TableRawMaterial = ({
 }) => {
   return (
     <div className="Table">
+      <h2>Raw Materials</h2>
       <MaterialTable
         icons={tableIcons}
         columns={columns}
@@ -91,7 +92,9 @@ const TableRawMaterial = ({
         }}
         editable={{
           onRowAdd: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for INSERT/ADD a RAW MATERIAL
+            ///
             new Promise((resolve, reject) => {
               let id = new Date().getTime().toString();
               setTimeout(() => {
@@ -106,7 +109,9 @@ const TableRawMaterial = ({
               resolve();
             }),
           onRowUpdate: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for UPDATE a RAW MATERIAL
+            ///
             new Promise((resolve, reject) => {
               axios
                 .put("http://localhost:3001/updateRawMaterial", {
@@ -131,7 +136,9 @@ const TableRawMaterial = ({
                 });
             }),
           onRowDelete: (newData) =>
-            //backEnd call
+            ///
+            //backEnd call for DELETE a RAW MATERIAL
+            ///
             new Promise((resolve, reject) => {
               axios
                 .delete(

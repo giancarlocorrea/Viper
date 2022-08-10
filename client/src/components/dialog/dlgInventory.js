@@ -5,13 +5,15 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Axios from "axios";
+
+import { DataService } from "../DataService";
 
 export default function Inventory({
   open,
   setOpen,
   selectedProduct,
   selectedRawMaterial,
+  setListInventory,
 }) {
   const [selectedRawMaterialQtty, setSelectedRawMaterialQtty] = useState(0);
 
@@ -24,14 +26,18 @@ export default function Inventory({
   };
 
   const handleInsert = (id_product, id_raw_material, raw_material_qtty) => {
-    Axios.post("http://localhost:3001/addInventory", {
-      id_products: id_product,
-      id_raw_materials: id_raw_material,
-      qtty: raw_material_qtty,
-    });
+    DataService.createInventory(id_product, id_raw_material, raw_material_qtty);
 
+    //setListInventory([...listInventory, resolve]);
+
+    //handleSelect();
     handleClose();
   };
+
+  // const handleSelect = () => {};
+  // Axios.get("http://localhost:3001/getAllInventory").then((response) => {
+  //   setListInventory(response.data);
+  // });
 
   return (
     <div>
@@ -59,9 +65,13 @@ export default function Inventory({
           </Button>
           <Button
             color="primary"
-            onClick={() =>
-              handleInsert(id_product, id_raw_material, selectedRawMaterialQtty)
-            }
+            onClick={() => {
+              handleInsert(
+                id_product,
+                id_raw_material,
+                selectedRawMaterialQtty
+              );
+            }}
           >
             Save
           </Button>

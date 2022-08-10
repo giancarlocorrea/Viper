@@ -22,16 +22,19 @@ app.post("/addRawMaterial", (req, res) => {
   const { name } = req.body;
   const { qtty } = req.body;
 
-  let mysql = "INSERT INTO raw_materials ( id, name, qtty) VALUES (?, ?, ?)";
+  let mysql = "INSERT INTO raw_material ( id, name, qtty) VALUES (?, ?, ?)";
   db.query(mysql, [id, name, qtty], (err, result) => {
-    res.send(result);
+    if (err) console.log(err);
+    else {
+      res.send(result);
+    }
   });
 });
 
 // -------------------- SELECT ALL RAW MATERIALS ------------------------ //
 
 app.get("/getAllRawMaterials", (req, res) => {
-  let mysql = "SELECT * FROM raw_materials";
+  let mysql = "SELECT * FROM raw_material";
   db.query(mysql, (err, result) => {
     if (err) {
       console.log(err);
@@ -46,7 +49,7 @@ app.get("/getAllRawMaterials", (req, res) => {
 app.put("/updateRawMaterial", (req, res) => {
   const { id, name, qtty } = req.body;
 
-  let mysql = "UPDATE raw_materials SET name = ?, qtty = ? WHERE id = ?";
+  let mysql = "UPDATE raw_material SET name = ?, qtty = ? WHERE id = ?";
   db.query(mysql, [name, qtty, id], (err, result) => {
     if (err) {
       res.send(err);
@@ -60,7 +63,7 @@ app.put("/updateRawMaterial", (req, res) => {
 
 app.delete("/deleteRawMaterial/:id", (req, res) => {
   const { id } = req.params;
-  let mysql = "DELETE FROM raw_materials WHERE id = ?";
+  let mysql = "DELETE FROM raw_material WHERE id = ?";
   db.query(mysql, id, (err, result) => {
     if (err) {
       console.log(err);
@@ -81,16 +84,17 @@ app.post("/addProduct", (req, res) => {
   const { name } = req.body;
   const { price } = req.body;
 
-  let mysql = "INSERT INTO products (id, name, price) VALUES (?, ?, ?)";
+  let mysql = "INSERT INTO product (id, name, price) VALUES (?, ?, ?)";
   db.query(mysql, [id, name, price], (err, result) => {
-    res.send(result);
+    if (err) console.log(err);
+    else res.send(result);
   });
 });
 
 // -------------------- SELECT ALL PRODUCTS ------------------------ //
 
 app.get("/getAllProducts", (req, res) => {
-  let mysql = "SELECT * FROM products";
+  let mysql = "SELECT * FROM product";
   db.query(mysql, (err, result) => {
     if (err) {
       console.log(err);
@@ -106,7 +110,7 @@ app.put("/updateProduct", (req, res) => {
   const { id } = req.body;
   const { name } = req.body;
   const { price } = req.body;
-  let mysql = "UPDATE products SET name = ?, price = ? WHERE id = ?";
+  let mysql = "UPDATE product SET name = ?, price = ? WHERE id = ?";
   db.query(mysql, [name, price, id], (err, result) => {
     if (err) {
       res.send(err);
@@ -120,7 +124,7 @@ app.put("/updateProduct", (req, res) => {
 
 app.delete("/deleteProduct/:id", (req, res) => {
   const { id } = req.params;
-  let mysql = "DELETE FROM products WHERE id = ?";
+  let mysql = "DELETE FROM product WHERE id = ?";
   db.query(mysql, id, (err, result) => {
     if (err) {
       console.log(err);
@@ -135,14 +139,28 @@ app.delete("/deleteProduct/:id", (req, res) => {
 ///
 
 app.post("/addInventory", (req, res) => {
-  const { id_products } = req.body;
-  const { id_raw_materials } = req.body;
+  const { id_product } = req.body;
+  const { id_raw_material } = req.body;
   const { qtty } = req.body;
 
   let mysql =
-    "INSERT INTO inventory ( id_products, id_raw_materials, qtty) VALUES (?, ?, ?)";
-  db.query(mysql, [id_products, id_raw_materials, qtty], (err, result) => {
-    res.send(result);
+    "INSERT INTO inventory ( id_product, id_raw_material, qtty) VALUES (?, ?, ?)";
+  db.query(mysql, [id_product, id_raw_material, qtty], (err, result) => {
+    if (err) console.log(err);
+    else res.send(result);
+  });
+});
+
+app.get("/getAllInventory", (req, res) => {
+  let mysql = `select p.name as 'product' , rm.name as 'raw material', i.qtty from inventory i
+               inner join product p on i.id_product = p.id
+               inner join raw_material rm on i.id_raw_material = rm.id
+              group by p.name, rm.name, i.qtty`;
+  db.query(mysql, (err, result) => {
+    if (err) console.log(err);
+    else {
+      res.send(result);
+    }
   });
 });
 

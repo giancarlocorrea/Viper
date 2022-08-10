@@ -1,5 +1,4 @@
 export const columns = [
-  { title: "id", field: "id", hidden: true },
   {
     title: "Name",
     field: "name",

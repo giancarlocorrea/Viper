@@ -13,25 +13,25 @@ export const DataService = {
     return axiosInstance.get("/getAllProducts");
   },
 
-  createProduct: (id, name, price) => {
+  createProduct: (id_product, name, price) => {
     return axiosInstance.post("/addProduct", {
-      id,
+      id_product,
       name: name,
       price: price,
     });
   },
 
-  updateProduct: (id, name, price) => {
+  updateProduct: (id_product, name, price) => {
     return axiosInstance.put("/updateProduct", {
-      id,
+      id_product,
       name: name,
       price: price,
     });
   },
 
-  deleteProduct: (id) => {
-    return axiosInstance.delete(`/deleteProduct/${id}`, {
-      id,
+  deleteProduct: (id_product) => {
+    return axiosInstance.delete(`/deleteProduct/${id_product}`, {
+      id_product,
     });
   },
 
@@ -43,25 +43,25 @@ export const DataService = {
     return axiosInstance.get("/getAllRawMaterials");
   },
 
-  createRawMaterial: (id, name, qtty) => {
+  createRawMaterial: (id_raw_material, name, qtty) => {
     return axiosInstance.post("/addRawMaterial", {
-      id,
-      name: name,
-      qtty: qtty,
+      id_raw_material,
+      name,
+      qtty,
     });
   },
 
-  updateRawMaterial: (id, name, qtty) => {
+  updateRawMaterial: (id_raw_material, name, qtty) => {
     return axiosInstance.put("/updateRawMaterial", {
-      id,
+      id_raw_material,
       name: name,
       qtty: qtty,
     });
   },
 
-  deleteRawMaterial: (id) => {
-    return axiosInstance.delete(`/deleteRawMaterial/${id}`, {
-      id,
+  deleteRawMaterial: (id_raw_material) => {
+    return axiosInstance.delete(`/deleteRawMaterial/${id_raw_material}`, {
+      id_raw_material,
     });
   },
 
@@ -75,9 +75,9 @@ export const DataService = {
 
   createInventory: (id_product, id_raw_material, qtty) => {
     return axiosInstance.post("/addInventory", {
-      id_product: id_product,
-      id_raw_material: id_raw_material,
-      qtty: qtty,
+      id_product,
+      id_raw_material,
+      qtty,
     });
   },
 };

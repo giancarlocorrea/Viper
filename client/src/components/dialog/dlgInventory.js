@@ -13,13 +13,17 @@ export default function Inventory({
   setOpen,
   selectedProduct,
   selectedRawMaterial,
+  listInventory,
   setListInventory,
 }) {
   const [selectedRawMaterialQtty, setSelectedRawMaterialQtty] = useState(0);
 
-  let id_product = selectedProduct.length !== 0 ? selectedProduct[0].id : null;
+  let id_product =
+    selectedProduct.length !== 0 ? selectedProduct[0].id_product : null;
   let id_raw_material =
-    selectedRawMaterial.length !== 0 ? selectedRawMaterial[0].id : null;
+    selectedRawMaterial.length !== 0
+      ? selectedRawMaterial[0].id_raw_material
+      : null;
 
   const handleClose = () => {
     setOpen(false);
@@ -27,17 +31,13 @@ export default function Inventory({
 
   const handleInsert = (id_product, id_raw_material, raw_material_qtty) => {
     DataService.createInventory(id_product, id_raw_material, raw_material_qtty);
+    setListInventory([
+      ...listInventory,
+      { id_product, id_raw_material, raw_material_qtty },
+    ]);
 
-    //setListInventory([...listInventory, resolve]);
-
-    //handleSelect();
     handleClose();
   };
-
-  // const handleSelect = () => {};
-  // Axios.get("http://localhost:3001/getAllInventory").then((response) => {
-  //   setListInventory(response.data);
-  // });
 
   return (
     <div>

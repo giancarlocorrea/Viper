@@ -31,20 +31,25 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
           setSelectedProduct(rows);
         }}
         editable={{
-          onRowAdd: (newData) => {
+          onRowAdd: (newData) =>
             ///
             //backEnd call for INSERT/ADD a PRODUCT
             ///
 
             new Promise((resolve, reject) => {
-              let id = new Date().getTime().toString();
+              let id_product = new Date().getTime().toString();
 
-              DataService.createProduct(id, newData.name, newData.price);
+              DataService.createProduct(
+                id_product,
+                newData.name,
+                newData.price
+              );
 
-              newData.id = id;
+              newData.id_product = id_product;
+
               setListProduct([...listProduct, newData]);
-            });
-          },
+              resolve();
+            }),
 
           onRowUpdate: (newData) =>
             ///
@@ -52,15 +57,15 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
             ///
 
             DataService.updateProduct(
-              newData.id,
+              newData.id_product,
               newData.name,
               newData.price
             ).then((resp) => {
               setListProduct(
                 listProduct.map((value) => {
-                  return value.id === newData.id
+                  return value.id_product === newData.id_product
                     ? {
-                        id: newData.id,
+                        id_product: newData.id_product,
                         name: newData.name,
                         price: newData.price,
                       }
@@ -74,10 +79,10 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
             //backEnd call for DELETE a PRODUCT
             ///
 
-            DataService.deleteProduct(newData.id).then((resp) => {
+            DataService.deleteProduct(newData.id_product).then((resp) => {
               setListProduct(
                 listProduct.filter((value) => {
-                  return value.id !== newData.id;
+                  return value.id_product !== newData.id_product;
                 })
               );
             }),

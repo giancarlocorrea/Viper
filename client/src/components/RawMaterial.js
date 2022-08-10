@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import MaterialTable from "material-table";
 
 import { DataService } from "./DataService";
@@ -12,10 +11,12 @@ const TableRawMaterial = ({
   setListRawMaterial,
   setSelectedRawMaterial,
 }) => {
+  const tableRef = React.useRef();
   return (
     <div className="Table">
       <h2>Raw Materials</h2>
       <MaterialTable
+        tableRef={tableRef}
         icons={tableIcons}
         columns={columns}
         data={listRawMaterial}
@@ -43,11 +44,16 @@ const TableRawMaterial = ({
             ///
 
             new Promise((resolve, reject) => {
-              let id = new Date().getTime().toString();
+              let id_raw_material = new Date().getTime().toString();
 
-              DataService.createRawMaterial(id, newData.name, newData.qtty);
+              DataService.createRawMaterial(
+                id_raw_material,
+                newData.name,
+                newData.qtty
+              );
 
-              newData.id = id;
+              newData.id_raw_material = id_raw_material;
+
               setListRawMaterial([...listRawMaterial, newData]);
               resolve();
             }),
@@ -58,15 +64,15 @@ const TableRawMaterial = ({
             ///
 
             DataService.updateRawMaterial(
-              newData.id,
+              newData.id_raw_material,
               newData.name,
               newData.qtty
             ).then((resp) => {
               setListRawMaterial(
                 listRawMaterial.map((value) => {
-                  return value.id === newData.id
+                  return value.id_raw_material === newData.id_raw_material
                     ? {
-                        id: newData.id,
+                        id_raw_material: newData.id_raw_material,
                         name: newData.name,
                         qtty: newData.qtty,
                       }
@@ -79,13 +85,15 @@ const TableRawMaterial = ({
             ///
             //backEnd call for DELETE a RAW MATERIAL
             ///
-            DataService.deleteRawMaterial(newData.id).then((resp) => {
-              setListRawMaterial(
-                listRawMaterial.filter((value) => {
-                  return value.id !== newData.id;
-                })
-              );
-            }),
+            DataService.deleteRawMaterial(newData.id_raw_material).then(
+              (resp) => {
+                setListRawMaterial(
+                  listRawMaterial.filter((value) => {
+                    return value.id_raw_material !== newData.id_raw_material;
+                  })
+                );
+              }
+            ),
         }}
       />
     </div>

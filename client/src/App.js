@@ -33,15 +33,15 @@ export default function App() {
       .then((response) => {
         setListProduct(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("ERRO  " + error);
       });
 
     DataService.getAllInventory()
-      .then(function (response) {
+      .then((response) => {
         setListInventory(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("ERRO  " + error);
       });
   }, []);

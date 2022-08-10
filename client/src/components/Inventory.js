@@ -27,6 +27,7 @@ const TableInventory = ({ listInventory }) => {
           showSelectAllCheckbox: false,
           showTextRowsSelected: false,
         }}
+        //onQueryChange={tableRef.current.setState(listInventory)}
       />
     </div>
   );

@@ -1,16 +1,16 @@
 const express = require("express");
 const app = express();
 
-const mysql = require("mysql");
+//const mysql = require("mysql");
 const cors = require("cors");
-//const db  = require("./models/db");
+db = require("./models/db");
 
-const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root123",
-  database: "viper",
-});
+// const db = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "root123",
+//   database: "viper",
+// });
 
 app.use(express.json());
 app.use(cors());
@@ -18,12 +18,13 @@ app.use(cors());
 // -------------------- INSERT/ADD RAW MATERIAL ------------------------ //
 
 app.post("/addRawMaterial", (req, res) => {
-  const { id } = req.body;
+  const { id_raw_material } = req.body;
   const { name } = req.body;
   const { qtty } = req.body;
 
-  let mysql = "INSERT INTO raw_material ( id, name, qtty) VALUES (?, ?, ?)";
-  db.query(mysql, [id, name, qtty], (err, result) => {
+  let mysql =
+    "INSERT INTO raw_material ( id_raw_material, name, qtty) VALUES (?, ?, ?)";
+  db.query(mysql, [id_raw_material, name, qtty], (err, result) => {
     if (err) console.log(err);
     else {
       res.send(result);
@@ -47,10 +48,11 @@ app.get("/getAllRawMaterials", (req, res) => {
 // ----------------------- UPDATE RAW MATERIAL BY [ID] ------------------------- //
 
 app.put("/updateRawMaterial", (req, res) => {
-  const { id, name, qtty } = req.body;
+  const { id_raw_material, name, qtty } = req.body;
 
-  let mysql = "UPDATE raw_material SET name = ?, qtty = ? WHERE id = ?";
-  db.query(mysql, [name, qtty, id], (err, result) => {
+  let mysql =
+    "UPDATE raw_material SET name = ?, qtty = ? WHERE id_raw_material = ?";
+  db.query(mysql, [name, qtty, id_raw_material], (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -61,10 +63,10 @@ app.put("/updateRawMaterial", (req, res) => {
 
 // ----------------------- DELETE RAW MATERIAL BY [ID] ------------------------- //
 
-app.delete("/deleteRawMaterial/:id", (req, res) => {
-  const { id } = req.params;
-  let mysql = "DELETE FROM raw_material WHERE id = ?";
-  db.query(mysql, id, (err, result) => {
+app.delete("/deleteRawMaterial/:id_raw_material", (req, res) => {
+  const { id_raw_material } = req.params;
+  let mysql = "DELETE FROM raw_material WHERE id_raw_material = ?";
+  db.query(mysql, id_raw_material, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -80,12 +82,12 @@ app.delete("/deleteRawMaterial/:id", (req, res) => {
 // -------------------- INSERT/ADD PRODUCT ------------------------ //
 
 app.post("/addProduct", (req, res) => {
-  const { id } = req.body;
+  const { id_product } = req.body;
   const { name } = req.body;
   const { price } = req.body;
 
-  let mysql = "INSERT INTO product (id, name, price) VALUES (?, ?, ?)";
-  db.query(mysql, [id, name, price], (err, result) => {
+  let mysql = "INSERT INTO product (id_product, name, price) VALUES (?, ?, ?)";
+  db.query(mysql, [id_product, name, price], (err, result) => {
     if (err) console.log(err);
     else res.send(result);
   });
@@ -107,11 +109,11 @@ app.get("/getAllProducts", (req, res) => {
 // ----------------------- UPDATE PRODUCT BY [ID] ------------------------- //
 
 app.put("/updateProduct", (req, res) => {
-  const { id } = req.body;
+  const { id_product } = req.body;
   const { name } = req.body;
   const { price } = req.body;
-  let mysql = "UPDATE product SET name = ?, price = ? WHERE id = ?";
-  db.query(mysql, [name, price, id], (err, result) => {
+  let mysql = "UPDATE product SET name = ?, price = ? WHERE id_product = ?";
+  db.query(mysql, [name, price, id_product], (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -122,10 +124,10 @@ app.put("/updateProduct", (req, res) => {
 
 // ----------------------- DELETE PRODUCT BY [ID] ------------------------- //
 
-app.delete("/deleteProduct/:id", (req, res) => {
-  const { id } = req.params;
-  let mysql = "DELETE FROM product WHERE id = ?";
-  db.query(mysql, id, (err, result) => {
+app.delete("/deleteProduct/:id_product", (req, res) => {
+  const { id_product } = req.params;
+  let mysql = "DELETE FROM product WHERE id_product = ?";
+  db.query(mysql, id_product, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -153,8 +155,8 @@ app.post("/addInventory", (req, res) => {
 
 app.get("/getAllInventory", (req, res) => {
   let mysql = `select p.name as 'product' , rm.name as 'raw material', i.qtty from inventory i
-               inner join product p on i.id_product = p.id
-               inner join raw_material rm on i.id_raw_material = rm.id
+               inner join product p on i.id_product = p.id_product
+               inner join raw_material rm on i.id_raw_material = rm.id_raw_material
               group by p.name, rm.name, i.qtty`;
   db.query(mysql, (err, result) => {
     if (err) console.log(err);

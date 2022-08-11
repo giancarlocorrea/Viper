@@ -1,4 +1,5 @@
 export const columns = [
+  { title: "Id Product", field: "id_product", hidden: true },
   {
     title: "Name",
     field: "name",

@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS `viper`.`inventory` (
   `id_raw_material` VARCHAR(45) NOT NULL,
   `qtty` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_product`, `id_raw_material`),
-  INDEX `fk_products_has_raw_materials_raw_materials1_idx` (`id_raw_material` ASC) VISIBLE,
+  INDEX `fk_products_has_raw_materials_raw_materials_idx` (`id_raw_material` ASC) VISIBLE,
   INDEX `fk_products_has_raw_materials_products_idx` (`id_product` ASC) VISIBLE,
   CONSTRAINT `fk_products_has_raw_materials_products`
     FOREIGN KEY (`id_product`)
     REFERENCES `viper`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_products_has_raw_materials_raw_materials1`
+  CONSTRAINT `fk_products_has_raw_materials_raw_materials`
     FOREIGN KEY (`id_raw_material`)
     REFERENCES `viper`.`raw_material` (`id_raw_material`)
     ON DELETE NO ACTION

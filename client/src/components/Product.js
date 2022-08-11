@@ -36,20 +36,11 @@ const TableProducts = ({ listProduct, setListProduct, setSelectedProduct }) => {
             //backEnd call for INSERT/ADD a PRODUCT
             ///
 
-            new Promise((resolve, reject) => {
-              let id_product = new Date().getTime().toString();
-
-              DataService.createProduct(
-                id_product,
-                newData.name,
-                newData.price
-              );
-
-              newData.id_product = id_product;
-
-              setListProduct([...listProduct, newData]);
-              resolve();
-            }),
+            DataService.createProduct(
+              (newData.id_product = new Date().getTime().toString()),
+              newData.name,
+              newData.price
+            ).then(setListProduct([...listProduct, newData])),
 
           onRowUpdate: (newData) =>
             ///

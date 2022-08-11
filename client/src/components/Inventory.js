@@ -5,7 +5,7 @@ import MaterialTable from "material-table";
 import { columns } from "./DataTable/columnInventory";
 import { tableIcons } from "./DataTable/TableIcons";
 
-const TableInventory = ({ listInventory }) => {
+const TableInventory = ({ listInventory, setListInventory }) => {
   return (
     <div className="TableInventory">
       <h2>Inventory</h2>
@@ -27,7 +27,9 @@ const TableInventory = ({ listInventory }) => {
           showSelectAllCheckbox: false,
           showTextRowsSelected: false,
         }}
-        //onQueryChange={tableRef.current.setState(listInventory)}
+        onQueryChange={(query) => {
+          query.search();
+        }}
       />
     </div>
   );

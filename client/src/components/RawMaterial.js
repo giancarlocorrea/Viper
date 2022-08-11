@@ -43,20 +43,11 @@ const TableRawMaterial = ({
             //backEnd call for INSERT/ADD a RAW MATERIAL
             ///
 
-            new Promise((resolve, reject) => {
-              let id_raw_material = new Date().getTime().toString();
-
-              DataService.createRawMaterial(
-                id_raw_material,
-                newData.name,
-                newData.qtty
-              );
-
-              newData.id_raw_material = id_raw_material;
-
-              setListRawMaterial([...listRawMaterial, newData]);
-              resolve();
-            }),
+            DataService.createRawMaterial(
+              (newData.id_raw_material = new Date().getTime().toString()),
+              newData.name,
+              newData.qtty
+            ).then(setListRawMaterial([...listRawMaterial, newData])),
 
           onRowUpdate: (newData) =>
             ///

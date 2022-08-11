@@ -71,6 +71,7 @@ export default function Inventory({
                 id_raw_material,
                 selectedRawMaterialQtty
               );
+              setListInventory(listInventory);
             }}
           >
             Save

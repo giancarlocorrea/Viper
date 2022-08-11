@@ -1,4 +1,5 @@
 export const columns = [
+  { title: "Id Raw material", field: "id_raw_material", hidden: true },
   {
     title: "Name",
     field: "name",
